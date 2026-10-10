@@ -280,3 +280,13 @@ body {
     flex-wrap: wrap;
   }
 }
+
+.campo-pesquisa {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 16px;
+  border: 1px solid #e3d5bd;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+ 

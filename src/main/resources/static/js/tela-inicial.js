@@ -21,6 +21,17 @@ $(function () {
         return item.usuario ? item.usuario.nome : 'desconhecido';
     }
 
+    // Monta o bloco de detalhes: uma linha "rótulo: valor" para cada campo.
+    function montarDescricao(campos) {
+        const bloco = $('<div>');
+        campos.forEach(function (campo) {
+            bloco.append($('<p>')
+                    .append($('<strong>').text(campo[0] + ': '))
+                    .append(document.createTextNode(campo[1])));
+        });
+        return bloco;
+    }
+
     function montarPostagem(avatar, autor, titulo, descricao, nomeReceita) {
         const post = $('<div>').addClass('postagem');
 
@@ -28,7 +39,12 @@ $(function () {
                 .append($('<span>').addClass('avatar').text(avatar))
                 .append($('<span>').addClass('usuario').text(autor)));
 
-        const descricaoEl = $('<div>').addClass('descricao').text(descricao);
+        const descricaoEl = $('<div>').addClass('descricao');
+        if (typeof descricao === 'string') {
+            descricaoEl.text(descricao);
+        } else {
+            descricaoEl.append(descricao);
+        }
         const tituloEl = $('<p>').addClass('nome-postagem').text(titulo + ' ▾');
         tituloEl.on('click', function () {
             descricaoEl.toggle();
@@ -73,7 +89,12 @@ $(function () {
                 .done(function (receitas) {
                     $(RECEITA.feed).empty();
                     receitas.forEach(function (r) {
-                        const descricao = 'categoria: ' + r.categoria + ' | dificuldade: ' + r.dificuldade + ' — ' + r.conteudo;
+                        const descricao = montarDescricao([
+                            ['categoria', r.categoria],
+                            ['dificuldade', r.dificuldade],
+                            ['material', r.material],
+                            ['conteúdo', r.conteudo]
+                        ]);
                         const post = montarPostagem(RECEITA.avatar, nomeDoAutor(r), r.nome, descricao, null);
                         post.append(montarAcoes(RECEITA, r, carregarTudo));
                         $(RECEITA.feed).append(post);
@@ -89,7 +110,13 @@ $(function () {
                 .done(function (projetos) {
                     $(PROJETO.feed).empty();
                     projetos.forEach(function (p) {
-                        const descricao = 'categoria: ' + p.categoria + ' | status: ' + p.status + ' — ' + p.detalhes;
+                        const descricao = montarDescricao([
+                            ['categoria', p.categoria],
+                            ['duração', p.duracao],
+                            ['material', p.material],
+                            ['status', p.status],
+                            ['detalhes', p.detalhes]
+                        ]);
                         const nomeReceita = p.receita ? p.receita.nome : null;
                         const post = montarPostagem(PROJETO.avatar, nomeDoAutor(p), p.nome, descricao, nomeReceita);
                         post.append(montarAcoes(PROJETO, p, carregarTudo));
@@ -130,6 +157,19 @@ $(function () {
         carregarReceitas();
         carregarProjetos();
     }
+
+    // Esconde as postagens que não contêm o texto digitado (em qualquer aba).
+    function filtrar() {
+        const termo = $('#pesquisa').val().trim().toLowerCase();
+        $('.postagem').each(function () {
+            const combina = $(this).text().toLowerCase().indexOf(termo) !== -1;
+            $(this).prop('hidden', !combina);
+        });
+    }
+
+    $('#pesquisa').on('input', filtrar);
+    // reaplica o filtro sempre que os feeds são recarregados
+    $(document).ajaxStop(filtrar);
 
     $('.menu-lateral').on('click', '[data-aba]', function () {
         $('.aba').prop('hidden', true);

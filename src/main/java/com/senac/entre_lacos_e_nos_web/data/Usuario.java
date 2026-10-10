@@ -1,5 +1,6 @@
 package com.senac.entre_lacos_e_nos_web.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -45,10 +46,12 @@ public class Usuario {
 
   @NotBlank(message = "tipo de usuário obrigatório")
   private String tipo;
-
+  
+  @JsonIgnore
   @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
   private List<Projeto> projeto;
-
+  
+  @JsonIgnore
   @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
   private List<Receita> receita;
 

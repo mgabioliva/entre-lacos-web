@@ -1,5 +1,6 @@
 package com.senac.entre_lacos_e_nos_web.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.CascadeType;
@@ -43,6 +44,7 @@ public class Receita {
   @JsonIgnoreProperties("receita")
   private Usuario usuario;
 
+  @JsonIgnore
   @OneToMany(mappedBy = "receita", cascade = CascadeType.ALL)
   private List<Projeto> projeto;
 

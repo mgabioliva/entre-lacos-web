@@ -291,3 +291,14 @@ body {
   background-color: #d59a3c;
   color: white;
 }
+
+.campo-pesquisa {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 16px;
+  border: 1px solid #cfe4e2;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background-color: #23211f;
+  color: #f3ece1;
+}
