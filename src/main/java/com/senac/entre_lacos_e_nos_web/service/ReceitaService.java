@@ -13,7 +13,7 @@ public class ReceitaService {
   @Autowired
   ReceitaRepository receitaRepository;
 
-  public Receita criarRceita(Receita rec) {
+  public Receita criarReceita(Receita rec) {
     rec.setId(null);
     receitaRepository.save(rec);
     return rec;
@@ -43,7 +43,7 @@ public class ReceitaService {
     receitaRepository.delete(rec);
   }
 
-  public List<Receita> getRceitaPorNomeOrCategoria(String nome, String categoria) {
+  public List<Receita> getReceitaPorNomeOrCategoria(String nome, String categoria) {
     return receitaRepository.findByNomeContainingIgnoreCaseOrCategoriaContainingIgnoreCase(nome, categoria);
   }
 
