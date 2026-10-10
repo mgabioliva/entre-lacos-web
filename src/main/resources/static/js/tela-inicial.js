@@ -158,7 +158,6 @@ $(function () {
         carregarProjetos();
     }
 
-    // Esconde as postagens que não contêm o texto digitado (em qualquer aba).
     function filtrar() {
         const termo = $('#pesquisa').val().trim().toLowerCase();
         $('.postagem').each(function () {
@@ -168,7 +167,6 @@ $(function () {
     }
 
     $('#pesquisa').on('input', filtrar);
-    // reaplica o filtro sempre que os feeds são recarregados
     $(document).ajaxStop(filtrar);
 
     $('.menu-lateral').on('click', '[data-aba]', function () {
