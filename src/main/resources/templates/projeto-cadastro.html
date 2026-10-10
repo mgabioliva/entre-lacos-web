@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>entre laços & nós - novo projeto</title>
+        <link rel="stylesheet" th:href="@{/css/} + ${tema} + '.css'">
+    </head>
+    <body>
+        <div class="cadastro-card">
+            <h1>cadastrar projeto</h1>
+            <input type="hidden" id="usuarioId" th:value="${usuarioId}">
+            <form id="formCriarProjeto" class="form-cadastro">
+                <label for="nome">nome:</label>
+                <input type="text" id="nome">
+                <span class="msg-erro" id="erroNome"></span>
+
+                <label for="categoria">categoria:</label>
+                <input type="text" id="categoria">
+                <span class="msg-erro" id="erroCategoria"></span>
+
+                <label for="duracao">duração (HH:mm):</label>
+                <input type="text" id="duracao" placeholder="ex: 02:30">
+                <span class="msg-erro" id="erroDuracao"></span>
+
+                <label for="material">material:</label>
+                <input type="text" id="material">
+                <span class="msg-erro" id="erroMaterial"></span>
+
+                <label for="status">status:</label>
+                <select id="status">
+                    <option value="em andamento">em andamento</option>
+                    <option value="concluído">concluído</option>
+                    <option value="pausado">pausado</option>
+                    <option value="abandonado">abandonado</option>
+                </select>
+                <span class="msg-erro" id="erroStatus"></span>
+
+                <label for="detalhes">detalhes:</label>
+                <textarea id="detalhes" rows="5"></textarea>
+                <span class="msg-erro" id="erroDetalhes"></span>
+
+                <label for="receitaId">receita:</label>
+                <select id="receitaId">
+                    <option value="">Nenhuma</option>
+                </select>
+                <span class="msg-erro" id="erroReceitaId"></span>
+
+                <button type="submit" class="btn-primario">cadastrar</button>
+            </form>
+            <a th:href="@{/}" class="link-form">voltar</a>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script th:src="@{/js/comum.js}"></script>
+        <script th:src="@{/js/projeto-cadastro.js}"></script>
+    </body>
+</html>

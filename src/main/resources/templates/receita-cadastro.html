@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>entre laços & nós - nova receita</title>
+        <link rel="stylesheet" th:href="@{/css/} + ${tema} + '.css'">
+    </head>
+    <body>
+        <div class="cadastro-card">
+            <h1>cadastrar receita</h1>
+            <input type="hidden" id="usuarioId" th:value="${usuarioId}">
+            <form id="formCriarReceita" class="form-cadastro">
+                <label for="nome">nome:</label>
+                <input type="text" id="nome">
+                <span class="msg-erro" id="erroNome"></span>
+
+                <label for="categoria">categoria:</label>
+                <input type="text" id="categoria">
+                <span class="msg-erro" id="erroCategoria"></span>
+
+                <label for="dificuldade">dificuldade:</label>
+                <select id="dificuldade">
+                    <option value="fácil-iniciante">fácil-iniciante</option>
+                    <option value="médio-intermediário">médio-intermediário</option>
+                    <option value="difícil-avançado">difícil-avançado</option>
+                </select>
+                <span class="msg-erro" id="erroDificuldade"></span>
+
+                <label for="material">material:</label>
+                <input type="text" id="material">
+                <span class="msg-erro" id="erroMaterial"></span>
+
+                <label for="conteudo">conteúdo:</label>
+                <textarea id="conteudo" rows="5"></textarea>
+                <span class="msg-erro" id="erroConteudo"></span>
+
+                <button type="submit" class="btn-primario">cadastrar</button>
+            </form>
+            <a th:href="@{/}" class="link-form">voltar</a>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script th:src="@{/js/comum.js}"></script>
+        <script th:src="@{/js/receita-cadastro.js}"></script>
+    </body>
+</html>

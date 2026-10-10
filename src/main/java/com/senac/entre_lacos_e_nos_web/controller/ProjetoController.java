@@ -2,16 +2,14 @@ package com.senac.entre_lacos_e_nos_web.controller;
 
 import com.senac.entre_lacos_e_nos_web.data.Projeto;
 import com.senac.entre_lacos_e_nos_web.service.ProjetoService;
-import jakarta.validation.Valid;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class ProjetoController {
@@ -20,10 +18,18 @@ public class ProjetoController {
   ProjetoService projetoService;
 
   @GetMapping("/")
-  public String viewHomePage(@CookieValue(name = "tema", defaultValue = "claro") String tema, Model model) {
-    model.addAttribute("listarProjetos", projetoService.listarTodosProjetos());
+  public String viewHomePage(@CookieValue(name = "tema", defaultValue = "escuro") String tema, HttpServletRequest request, Model model) {
+    HttpSession sessao = request.getSession(false);
+    Integer usuarioId = (sessao != null) ? (Integer) sessao.getAttribute("usuarioId") : null;
+    String usuarioNome = (sessao != null) ? (String) sessao.getAttribute("usuarioNome") : null;
+
+    if (usuarioNome == null) {
+      return "redirect:/login";
+    }
+    model.addAttribute("usuarioId", usuarioId);
+    model.addAttribute("usuarioNome", usuarioNome);
     model.addAttribute("tema", tema);
-    return "projeto-lista"; // html da tela inicial
+    return "tela-inicial";
   }
 
   @GetMapping("/deletarProjeto/{id}")
@@ -33,28 +39,16 @@ public class ProjetoController {
   }
 
   @GetMapping("/criarProjetoForm")
-  public String criarProjetoForm(@CookieValue(name = "tema", defaultValue = "claro") String tema, Model model) {
-    Projeto proj = new Projeto();
-    model.addAttribute("projeto", proj);
+  public String criarProjetoForm(@CookieValue(name = "tema", defaultValue = "escuro") String tema, HttpServletRequest request, Model model) {
+    HttpSession sessao = request.getSession(false);
+    Integer usuarioId = (sessao != null) ? (Integer) sessao.getAttribute("usuarioId") : null;
+    model.addAttribute("usuarioId", usuarioId);
     model.addAttribute("tema", tema);
-    return "projeto-cadastro"; // html da tela de cadastro
-  }
-
-  @PostMapping("/salvarProjeto")
-  public String salvarProjeto(@Valid @ModelAttribute("projeto") Projeto proj, BindingResult result) {
-    if (result.hasErrors()) {
-      return "projeto-cadastro"; // html da tela de cadastro
-    }
-    if (proj.getId() == null) {
-      projetoService.criarProjeto(proj);
-    } else {
-      projetoService.atualizarProjeto(proj.getId(), proj);
-    }
-    return "redirect:/";
+    return "projeto-cadastro"; 
   }
 
   @GetMapping("/atualizarProjetoForm/{id}")
-  public String atualizarProjetoForm(@PathVariable Integer id, @CookieValue(name = "tema", defaultValue = "claro") String tema, Model model) {
+  public String atualizarProjetoForm(@PathVariable Integer id, @CookieValue(name = "tema", defaultValue = "escuro") String tema, Model model) {
     Projeto proj = projetoService.getProjetoId(id);
     model.addAttribute("projeto", proj);
     model.addAttribute("tema", tema);
@@ -62,7 +56,7 @@ public class ProjetoController {
   }
 
   @GetMapping("/projeto-receita/{id}")
-  public String mostraRecita(@PathVariable Integer id, @CookieValue(name = "tema", defaultValue = "claro") String tema, Model model) {
+  public String mostraRecita(@PathVariable Integer id, @CookieValue(name = "tema", defaultValue = "escuro") String tema, Model model) {
     Projeto proj = projetoService.getProjetoId(id);
     model.addAttribute("projeto", proj);
     model.addAttribute("tema", tema);

@@ -16,6 +16,7 @@ public class UsuarioService {
 
   public Usuario criarUsuario(Usuario user) {
     user.setId(null);
+    user.setSenha(Criptografia.getMD5(user.getSenha()));
     usuarioRepository.save(user);
     return user;
   }
@@ -25,8 +26,6 @@ public class UsuarioService {
     user.setNome(usuarioRequest.getNome());
     user.setUsername(usuarioRequest.getUsername());
     user.setEmail(usuarioRequest.getEmail());
-    String senhaCriptografada = Criptografia.getMD5(user.getSenha());
-    user.setSenha(senhaCriptografada);
     user.setBiografia(usuarioRequest.getBiografia());
     user.setTipo(usuarioRequest.getTipo());
     usuarioRepository.save(user);
@@ -34,7 +33,7 @@ public class UsuarioService {
   }
 
   public Usuario getUsuarioId(Integer userId) {
-    return usuarioRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado " + userId));
+    return usuarioRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("usuário não encontrado " + userId));
   }
 
   public List<Usuario> listarTodosUsuarios() {

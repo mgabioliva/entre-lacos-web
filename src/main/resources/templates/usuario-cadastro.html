@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>entre laços & nós - criar conta</title>
+        <link rel="stylesheet" th:href="@{/css/} + ${tema} + '.css'">
+    </head>
+    <body>
+        <div class="cadastro-card">
+            <h1>criar conta</h1>
+            <form id="formCriarUsuario" class="form-cadastro">
+                <label for="nome">nome:</label>
+                <input type="text" id="nome">
+                <span class="msg-erro" id="erroNome"></span>
+
+                <label for="username">username:</label>
+                <input type="text" id="username">
+                <span class="msg-erro" id="erroUsername"></span>
+
+                <label for="email">e-mail:</label>
+                <input type="text" id="email">
+                <span class="msg-erro" id="erroEmail"></span>
+
+                <label for="senha">senha:</label>
+                <input type="password" id="senha">
+                <span class="msg-erro" id="erroSenha"></span>
+
+                <label for="biografia">biografia:</label>
+                <textarea id="biografia" rows="3"></textarea>
+                <span class="msg-erro" id="erroBiografia"></span>
+
+                <label for="tipo">tipo de usuário:</label>
+                <select id="tipo">
+                    <option value="user">user</option>
+                    <option value="admin">administrador</option>
+                </select>
+                <span class="msg-erro" id="erroTipo"></span>
+
+                <button type="submit" class="btn-primario">cadastrar</button>
+            </form>
+            <a th:href="@{/login}" class="link-form">já tem conta? entra logo</a>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script th:src="@{/js/comum.js}"></script>
+        <script th:src="@{/js/usuario-cadastro.js}"></script>
+    </body>
+</html>

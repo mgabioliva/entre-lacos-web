@@ -11,6 +11,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 import lombok.Data;
 
@@ -36,6 +37,7 @@ public class Usuario {
   private String email;
 
   @NotBlank(message = "senha obrigatória")
+  @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres")
   private String senha;
 
   @NotBlank(message = "biografia obrigatória")

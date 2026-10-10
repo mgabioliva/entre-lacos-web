@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>entre laços & nós - login</title>
+        <link rel="stylesheet" th:href="@{/css/} + ${tema} + '.css'">
+    </head>
+    <body>
+        <div class="login-card">
+            <h1>entre laços & nós</h1>
+            <form th:action="@{/login}" method="POST" class="form-login">
+                <label for="username">usuário</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="senha">senha</label>
+                <input type="password" id="senha" name="senha" required>
+
+                <p class="msg-erro" th:if="${erro}" th:text="${erro}"></p>
+
+                <button type="submit" class="btn-primario">entrar</button>
+            </form>
+            <a th:href="@{/criarUsuarioForm}" class="link-form">não tem conta? crie sua conta aqui!</a>
+        </div>
+    </body>
+</html>
