@@ -17,12 +17,12 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Usuario")
-@JsonPropertyOrder({"id_usuario", "nome", "username", "email", "senha", "biografia", "tipoUsuario"})
+@JsonPropertyOrder({"id", "nome", "username", "email", "senha", "biografia", "tipo"})
 public class Usuario {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private int id_usuario;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
   @NotBlank(message = "nome obrigatório")
   private String nome;
@@ -42,7 +42,7 @@ public class Usuario {
   private String biografia;
 
   @NotBlank(message = "tipo de usuário obrigatório")
-  private String tipoUsuario;
+  private String tipo;
 
   @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
   private List<Projeto> projeto;

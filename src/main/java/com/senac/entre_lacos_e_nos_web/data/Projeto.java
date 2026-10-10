@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -16,12 +15,12 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Projeto")
-@JsonPropertyOrder({"id_projeto", "nome", "categoria", "duracao", "material", "status", "detalhes", "usuario", "receita"})
+@JsonPropertyOrder({"id", "nome", "categoria", "duracao", "material", "status", "detalhes", "usuario", "receita"})
 public class Projeto {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer id_projeto;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
   @NotBlank(message = "nome obrigatório")
   private String nome;
@@ -44,12 +43,10 @@ public class Projeto {
 
   @ManyToOne
   @JsonIgnoreProperties("projeto")
-  @JoinColumn(name = "id_usuario")
   private Usuario usuario;
 
   @ManyToOne
   @JsonIgnoreProperties("projeto")
-  @JoinColumn(name = "id_receita")
   private Receita receita;
 
 }

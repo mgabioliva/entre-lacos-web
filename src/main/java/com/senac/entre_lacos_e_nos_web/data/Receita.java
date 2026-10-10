@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -18,12 +17,12 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Receita")
-@JsonPropertyOrder({"id_receita", "nome", "categoria", "dificuldade", "material", "conteudo", "usuario"})
+@JsonPropertyOrder({"id", "nome", "categoria", "dificuldade", "material", "conteudo", "usuario"})
 public class Receita {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer id_receita;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
   @NotBlank(message = "nome obrigatório")
   private String nome;
@@ -42,10 +41,9 @@ public class Receita {
 
   @ManyToOne
   @JsonIgnoreProperties("receita")
-  @JoinColumn(name = "id_usuario")
   private Usuario usuario;
 
-  @OneToMany(mappedBy = "recita", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "receita", cascade = CascadeType.ALL)
   private List<Projeto> projeto;
 
 }
